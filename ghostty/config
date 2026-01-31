@@ -1,0 +1,26 @@
+font-family = Berkeley Mono Regular
+font-style = Regular
+font-size = 13
+font-thicken = true
+
+font-feature = -calt, -liga, -dlig
+
+bold-is-bright = true
+
+adjust-underline-position = 40%
+adjust-underline-thickness = -60%
+
+shell-integration = zsh
+shell-integration-features = no-cursor
+
+cursor-style = block
+cursor-style-blink = false
+
+keybind = ctrl+l=new_split:right
+
+window-width = 120
+window-height = 45
+window-padding-x = 4
+
+theme = Gruvbox Dark Hard
+keybind = shift+enter=text:\x1b\r

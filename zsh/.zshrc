@@ -40,11 +40,10 @@ alias grep='rg'
 alias egrep='rg'
 alias fgrep='rg'
 
-# nvm lazy-load (keep, but don’t use a weird leading comma unless you like it)
-nvm() {
+# nvm lazy-load
+,nvm() {
   export NVM_DIR="$HOME/.config/nvm"
   [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
-  command nvm "$@"
 }
 
 # prompt (adam1-style, gruvbox dark hard-ish)

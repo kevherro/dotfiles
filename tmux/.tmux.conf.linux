@@ -22,18 +22,18 @@ bind j select-pane -D
 bind k select-pane -U
 bind l select-pane -R
 
-# copy mode (vi keys) + macos clipboard
+# copy mode (vi keys) + linux clipboard (x11)
 setw -g mode-keys vi
 set -g set-clipboard on
 
 # prefix + [ enters copy-mode (default)
 # selection + yank
 bind -T copy-mode-vi v send -X begin-selection
-bind -T copy-mode-vi y send -X copy-pipe-and-cancel "pbcopy"
+bind -T copy-mode-vi y send -X copy-pipe-and-cancel "xclip -selection clipboard"
 bind -T copy-mode-vi r send -X rectangle-toggle
 
 # mouse drag end copies to clipboard
-bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "pbcopy"
+bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -selection clipboard"
 
 # paste last tmux buffer
 bind p paste-buffer

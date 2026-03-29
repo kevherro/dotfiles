@@ -35,7 +35,7 @@ alias update='brew update && brew upgrade'
 alias vim=nvim
 alias fly=flyctl
 alias mkt='cd "$(mktemp -d)"'
-alias cc=claude
+alias cc='EDITOR=vim claude'
 alias grep='rg'
 alias egrep='rg'
 alias fgrep='rg'
@@ -92,3 +92,6 @@ prompt_kevin_setup
 source_if() { [[ -r "$1" ]] && source "$1"; }
 source_if "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source_if "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# bun completions
+[ -s "/Users/kevin/.bun/_bun" ] && source "/Users/kevin/.bun/_bun"

@@ -1,6 +1,9 @@
 # oh-my-zsh
 export ZSH="$HOME/.oh-my-zsh"
 plugins=(git)
+ZSH_DISABLE_COMPFIX=true
+ZSH_COMPDUMP="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
+mkdir -p "${ZSH_COMPDUMP:h}"
 [[ -d "$ZSH" ]] && source "$ZSH/oh-my-zsh.sh"
 
 # history
@@ -17,33 +20,35 @@ setopt HIST_REDUCE_BLANKS
 setopt EXTENDED_HISTORY
 setopt HIST_FCNTL_LOCK
 
-# completion: cached + fast
-autoload -Uz compinit
-_compdump="${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
-mkdir -p "${_compdump:h}"
-# -C skips some expensive checks; delete compdump if you change fpath a lot
-compinit -d "$_compdump" -C
+# conditional sourcing helper
+source_if() { [[ -r "$1" ]] && source "$1"; }
 
-# bun completions (fine to source; do it after compinit if it's not adding to fpath)
-[[ -s "$HOME/.bun/_bun" ]] && source "$HOME/.bun/_bun"
+# bun completions (compinit already ran via oh-my-zsh above)
+source_if "$HOME/.bun/_bun"
 
 # aliases (avoid breaking mac bsd tools)
 alias ll='ls -lah'
 alias la='ls -A'
 alias l='ls -CF'
 alias update='brew update && brew upgrade'
-alias vim=nvim
-alias fly=flyctl
+command -v nvim >/dev/null && alias vim=nvim
+command -v flyctl >/dev/null && alias fly=flyctl
 alias mkt='cd "$(mktemp -d)"'
 alias cc='EDITOR=vim claude'
-alias grep='rg'
-alias egrep='rg'
-alias fgrep='rg'
+if command -v rg >/dev/null; then
+  alias grep='rg'
+  alias egrep='rg'
+  alias fgrep='rg'
+fi
+alias k='ssh -i /Users/kevin/.ssh/us-ca-lax.pem kevin@ec2-35-92-54-199.us-west-2.compute.amazonaws.com'
+alias cpi='ssh -i /Users/kevin/.ssh/us-ca-lax.pem ubuntu@ec2-54-185-197-100.us-west-2.compute.amazonaws.com'
 
 # nvm lazy-load
-,nvm() {
+nvm() {
+  unset -f nvm
   export NVM_DIR="$HOME/.config/nvm"
   [[ -s "$NVM_DIR/nvm.sh" ]] && . "$NVM_DIR/nvm.sh"
+  nvm "$@"
 }
 
 # prompt (adam1-style, gruvbox dark hard-ish)
@@ -88,75 +93,9 @@ prompt_kevin_precmd() {
 
 prompt_kevin_setup
 
-tmux-help() {
-  local choice=${1:-all}
-
-  declare -A cmds
-  cmds[sessions]="
-  C-a (prefix)                    your prefix (not C-b)
-  new -s <name>                   new named session
-  a -t <name>                     attach to session
-  d                               detach
-  kill-session -t <name>          kill session
-  ls                              list sessions
-  \$                               rename session"
-
-  cmds[windows]="
-  c                               new window
-  n / p                           next / prev
-  w                               list windows
-  <n>                             jump to window n
-  ,                               !! this renames PANE not window
-  &                               kill window"
-
-  cmds[panes]="
-  v                               split vertical (your binding)
-  s                               split horizontal (your binding)
-  h/j/k/l                         navigate panes (vim, prefix)
-  z                               zoom/unzoom
-  x                               kill pane
-  { }                             swap pane
-  q                               show pane numbers
-  Space                           cycle layouts
-  ,                               rename pane (your binding)"
-
-  cmds[copy]="
-  prefix + [                      enter copy mode
-  v                               begin selection (vi)
-  y                               yank to clipboard via pbcopy
-  r                               rectangle toggle
-  q / Esc                         exit copy mode
-  p                               paste tmux buffer (your binding)
-  mouse drag                      auto-yanks to pbcopy on release"
-
-  cmds[misc]="
-  r                               reload ~/.tmux.conf (your binding)
-  ?                               list all bindings
-  :                               command prompt
-  t                               clock
-  mouse on                        click to select pane/window"
-
-  local topics=(sessions windows panes copy misc)
-
-  echo ""
-  if [[ "$choice" == "all" ]]; then
-    for t in "${topics[@]}"; do
-      echo "── $t ──${cmds[$t]}"
-      echo ""
-    done
-  elif [[ -n "${cmds[$choice]}" ]]; then
-    echo "── $choice ──${cmds[$choice]}"
-  else
-    echo "topics: ${topics[*]}"
-  fi
-}
-
+source_if "${XDG_CONFIG_HOME:-$HOME/.config}/zsh/tmux-help.zsh"
 alias th='tmux-help'
 
 # autosuggestions + syntax highlighting LAST (they hook widgets)
-source_if() { [[ -r "$1" ]] && source "$1"; }
 source_if "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source_if "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-
-# bun completions
-[ -s "/Users/kevin/.bun/_bun" ] && source "/Users/kevin/.bun/_bun"

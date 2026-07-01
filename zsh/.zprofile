@@ -7,3 +7,6 @@ fi
 
 # rust/cargo (login)
 [[ -r "$HOME/.cargo/env" ]] && . "$HOME/.cargo/env"
+
+# codex
+export PATH="/Users/kevin/.local/bin:$PATH"

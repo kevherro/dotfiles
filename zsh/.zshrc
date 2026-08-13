@@ -40,8 +40,8 @@ if command -v rg >/dev/null; then
   alias egrep='rg'
   alias fgrep='rg'
 fi
-alias k='ssh -i /Users/kevin/.ssh/us-ca-lax.pem kevin@ec2-35-92-54-199.us-west-2.compute.amazonaws.com'
-alias cpi='ssh -i /Users/kevin/.ssh/us-ca-lax.pem ubuntu@ec2-54-185-197-100.us-west-2.compute.amazonaws.com'
+alias s='ssh -i /Users/kevin/.ssh/sophon-1_key.pem herro@52.190.136.194'
+alias k='ssh -i /Users/kevin/.ssh/kevin_key.pem kevin@20.165.188.151'
 
 # nvm lazy-load
 nvm() {
@@ -99,3 +99,9 @@ alias th='tmux-help'
 # autosuggestions + syntax highlighting LAST (they hook widgets)
 source_if "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
 source_if "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+# >>> grok installer >>>
+export PATH="$HOME/.grok/bin:$PATH"
+fpath=(~/.grok/completions/zsh $fpath)
+autoload -Uz compinit && compinit -C
+# <<< grok installer <<<

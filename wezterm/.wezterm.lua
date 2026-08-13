@@ -62,6 +62,8 @@ config.enable_scroll_bar = false
 config.hide_mouse_cursor_when_typing = true
 config.adjust_window_size_when_changing_font_size = false
 
+config.enable_kitty_keyboard = true
+
 config.keys = {
 	{ key = 'Enter', mods = 'CMD',       action = act.ToggleFullScreen },
 	{ key = 'd',     mods = 'CMD',       action = act.SplitHorizontal { domain = 'CurrentPaneDomain' } },

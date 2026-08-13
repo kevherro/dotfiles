@@ -10,3 +10,4 @@ fi
 
 # codex
 export PATH="/Users/kevin/.local/bin:$PATH"
+export PATH="$(brew --prefix gettext)/bin:$PATH"

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Write Tech Spec"
+  short_description: "Turn aligned decisions into build-ready specs"
+  default_prompt: "Use $write-tech-spec to turn this approved technical direction into an implementation-ready specification."
+
+policy:
+  allow_implicit_invocation: true

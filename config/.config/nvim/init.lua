@@ -2,6 +2,14 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
+-- express_line.nvim still calls the deprecated vim.tbl_flatten API.
+-- Keep its legacy call working on Neovim 0.12+ without changing plugin files.
+if vim.fn.has('nvim-0.12') == 1 then
+	vim.tbl_flatten = function(tbl)
+		return vim.iter(tbl):flatten(math.huge):totable()
+	end
+end
+
 -- basics
 vim.o.number = true
 vim.o.relativenumber = true

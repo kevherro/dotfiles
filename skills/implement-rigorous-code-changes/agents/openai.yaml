@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rigorous Code Changes"
+  short_description: "Derive correct, testable changes from invariants"
+  default_prompt: "Use $implement-rigorous-code-changes to fix this bug, add a regression test, and verify the complete change."

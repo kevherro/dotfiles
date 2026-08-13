@@ -1,0 +1,4 @@
+interface:
+  display_name: "Simple English"
+  short_description: "Rewrite technical text for fast, accurate reading"
+  default_prompt: "Use $simple-english to rewrite this technical text for clarity while preserving every fact and identifier."

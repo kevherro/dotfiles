@@ -1,0 +1,4 @@
+interface:
+  display_name: "Russ Cox–Inspired Technical Prose"
+  short_description: "Derive clear technical prose from evidence"
+  default_prompt: "Use $write-rigorous-technical-prose to draft a rigorous, readable technical memo from these notes."
